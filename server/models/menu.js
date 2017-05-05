@@ -5,8 +5,7 @@ var MenuSchema = new Schema ({
     imagePath: String,
     menuItem: String,
     Description: String,
-    Price: Number
-
-})
+    Price: Number,
+});
 
 module.exports = mongoose.model('Menu', MenuSchema);

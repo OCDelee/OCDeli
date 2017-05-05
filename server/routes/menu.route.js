@@ -43,7 +43,7 @@ function updateMenu(req, res) {
 
 
             menu.save(function(err){
-                if (err)
+                if (!err)
                     res.send(err);
 
                 res.json({ message: 'Menu Updated!' });
@@ -61,7 +61,13 @@ function createMenu(req, res) {
             menu.Price = req.body.Price;
 
         menu.save(function(err) {
-            if (err)
+            if (!err) {
+                Menu.find({})
+                    .populate('ingredients')
+                    .exec(function(error, menu) {
+                        console.log(JSON.stringify(menus, null, "\t"))
+                    })
+            }
                 res.send(err);
 
             res.json({ message: 'Menu item created!' });

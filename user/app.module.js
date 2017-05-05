@@ -2,40 +2,47 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute'
+        .module('app', ['ui.router'
         ])
 
-    .config(function($routeProvider) {
-        $routeProvider
-        .when('/', {
+    .config(function($stateProvider, $urlRouterProvider) {
+
+        $urlRouterProvider.otherwise(function($injector){
+        var $state = $injector.get('$state');
+        $state.go('landing');
+    });
+
+        $stateProvider
+        .state('landing', {
+            url: '/landing',
             templateUrl:'partials/landing.html',
             access: {restricted: false}
         })
-        .when('/login', {
+        .state('login', {
+            url: '/login',
             templateUrl: 'partials/login.html',
             controller: 'LoginController as loginCtrl',
             access: {restricted: false}
         })
-        .when('/logout', {
+        .state('logout', {
             controller: 'LogoutController as logoutCtrl',
-            access: {restricted: true}
+            access: {restricted: false}
         })
-        .when('/register', {
+        .state('register', {
+            url: '/register',
             templateUrl: 'partials/register.html',
             controller: 'RegisterController as registerCtrl',
             access: {restricted: false}
         })
-        .otherwise({
-            redirectTo: '/'
-        });
+        $urlRouterProvider.otherwise('/');
     })
 
-    .run(function($rootScope, $location, $route, authServiceFactory) {
+    .run(function($rootScope, $state, $location, authServiceFactory) {
         $rootScope.$on('$routeChangeStart',
-        function (event, next, current) {
+        function (event, toState, toParams, fromState, fromParams) {
             authServiceFactory.getUserStatus()
             .then(function() {
-                if(next.access.restricted && authServiceFactory.isLoggedIn() === false) {
+                if(toState.access.restricted && authServiceFactory.isLoggedIn() === false) {
                     $location.path('/login');
                     $route.reload();
                 }

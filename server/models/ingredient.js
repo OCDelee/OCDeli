@@ -8,7 +8,9 @@ var ingredientSchema = new Schema ({
     Protein: Number,
     Vitamins: String,
     Minerals: String,
-    Cost: Number
-})
+    Cost: Number,
+    
+});
+
 
 module.exports = mongoose.model('ingredient', ingredientSchema);
