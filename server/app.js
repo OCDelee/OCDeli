@@ -6,22 +6,25 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const mongoose = require('mongoose');
-const customerRoute = require('./routes/customer.route');
-const ingredientRoute = require('./routes/ingredient.route');
-const menuRoute = require('./routes/menu.route');
-const orderRoute = require('./routes/order.route');
-const orderDetailRoute = require('./routes/orderDetail.route');
-const paymentDetailRoute = require('./routes/paymentDetail.route');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const mongoDB = 'mongodb://127.0.0.1:27017/OCDeli';
 const cors = require('cors');
 
-// mongoose
-mongoose.connect(mongoDB);
+// route dependencies
+const addressRoute = require('./routes/address.route');
+const addressTypeRoute = require('./routes/address.type.route');
+const ingredientRoute = require('./routes/ingredient.route');
+const itemIngredientRoute = require('./routes/item.ingredient.route');
+const itemRouteRoute = require('./routes/item.route');
+const orderItemRoute = require('./routes/order.item.route');
+const orderRoute = require('./routes/order.route');
+const roleRoute = require('./routes/role.route');
+const userRoute = require('./routes/user.route');
+const userRole = require('./routes/user.role');
 
-var routes = require('./routes/index');
-var User = require('./models/user');
+// mongoose
+const mongoDB = 'mongodb://127.0.0.1:27017/OCDeli';
+mongoose.connect(mongoDB);
 
 var app = express();
 
@@ -41,28 +44,26 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
-
 // routes
-
-app.use('/api/customers', customerRoute);
-app.use('/api/ingredients', ingredientRoute);
-app.use('/api/menu', menuRoute);
-app.use('/api/orders', orderRoute);
-app.use('/api/orderdetails', orderDetailRoute);
-app.use('/api/paymentdetails', paymentDetailRoute);
-
-app.use('/user/', routes);
+app.use('/api/address', addressRoute);
+app.use('/api/addresstype', addressTypeRoute);
+app.use('/api/ingredient', ingredientRoute);
+app.use('/api/itemIngredient', itemIngredientRoute);
+app.use('/api/item', itemRoute);
+app.use('/api/orderItem', orderItemRoute);
+app.use('/api/order', orderRoute);
+app.use('/api/role', roleRoute);
+app.use('/api/userRole', userRoleRoute);
+app.use('/user/', userRoute);
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../user', 'index.html'));
 });
 
 // passport config
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.use(new LocalStrategy(user.authenticate()));
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser());
 
 
 // error handlers

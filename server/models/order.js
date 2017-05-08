@@ -1,12 +1,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var OrderSchema = new Schema ({
-    Rating: Number,
-    Cost: Number,
-    Canceled: Boolean,
-    Confirmed: Boolean,
-    Completed: Boolean
+var orderSchema = new Schema ({
+    user: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'user' 
+    },
+    number: Number,
+    total: Number,
+    status: {
+       type: String,
+       enum: ['Canceled', 'Confirmed', 'Completed']
+    },
+    paid: Boolean
 })
 
-module.exports = mongoose.model('Order', OrderSchema);
+module.exports = mongoose.model('order', orderSchema);

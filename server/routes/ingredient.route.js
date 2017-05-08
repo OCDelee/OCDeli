@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const Ingredient = require('../models/ingredient.js');
+const ingredient = require('../models/ingredient.js');
 
 router
     .get('/', getAllIngredients)
-    .get('/:ingredient_id', getIngredient)
-    .put('/:ingredient_id', updateIngredient)
+    .get('/:_id', getIngredient)
+    .put('/:_id', updateIngredient)
     .post('/', createIngredient)
-    .delete('/:ingredient_id', deleteIngredient);
+    .delete('/:_id', deleteIngredient);
    
 
 
@@ -15,35 +15,42 @@ router
 
 
 function getAllIngredients(req, res) {
-        Ingredient.find(function(err, ingredients){
+        ingredient.find(function(err, ingredients){
             if (err)
-                res.send(err);
+                res.status(500).send(err);
 
             res.json(ingredients);
-        });
+        })
+        
     }
 
 function getIngredient(req, res) {
-        Ingredient.findById(req.params.ingredient_id, function(err, ingredient) {
+        ingredient.findById(req.params.ingredient_id, function(err, ingredient) {
             if (err)
-                res.send(err);
+                res.status(500).send(err);
             res.json(ingredient);
         });
     }
 
 function updateIngredient(req, res) {
-        Ingredient.findById(req.params.ingredient_id, function(err, ingredient) {
+        ingredient.findById(req.params.ingredient_id, function(err, ingredient) {
             if (err)
                 res.send(err)
 
-            ingredient.Name = req.body.Name;
-            ingredient.Calories = req.body.Calories;
-            ingredient.Cost = req.body.Cost;
+            ingredient.name = req.body.name;
+            ingredient.calories = req.body.calories;
+            ingredient.fiber = req.body.fiber;
+            ingredient.protein = req.body.protein;
+            ingredient.vitamin = req.body.vitamin;
+            ingredient.mineral = req.body.mineral;
+            ingredient.total = req.body.total;
+            ingredient.servingSize = req.body.servingSize;
+            ingredient.servingSizeUOM = req.body.servingSizeUOM;
 
 
             ingredient.save(function(err){
                 if (err)
-                    res.send(err);
+                    res.status(500).send(err);
 
                 res.json({ message: 'Ingredient Updated!' });
             });
@@ -51,27 +58,22 @@ function updateIngredient(req, res) {
     }
 
 function createIngredient(req, res) {
+        var i = new ingredient(req.body);
 
-        var ingredient = new Ingredient();
-
-            ingredient.Name = req.body.Name;
-            ingredient.Calories = req.body.Calories;
-            ingredient.Cost = req.body.Cost;
-
-        ingredient.save(function(err) {
+        i.save(function(err) {
             if (err)
-                res.send(err);
+                res.status(500).send(err);
 
             res.json({ message: 'Ingredient created!' });
         });
     }
 
 function deleteIngredient(req, res) {
-        Ingredient.remove({
+        ingredient.remove({
             _id: req.params.ingredient_id
         }, function(err, ingredient) {
             if (err)
-                res.send(err);
+                res.status(500).send(err);
 
             res.json({ message: 'Ingredient Deleted!' })
         });

@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const Order = require('../models/order.js');
+const order = require('../models/order');
+const user = require('../models/user')
+const mongoose = require('mongoose');
 
 router
     .get('/', getAllOrders)
-    .get('/:order_id', getOrder)
-    .put('/:order_id', updateOrder)
+    .get('/:_id', getOrder)
+    .put('/:_id', updateOrder)
     .post('/', createOrder)
-    .delete('/:order_id', deleteOrder);
+    .delete('/:_id', deleteOrder);
    
 
 
@@ -15,70 +17,61 @@ router
 
 
 function getAllOrders(req, res) {
-        Order.find(function(err,orders){
+        order.find(function(err, orders){
             if (err)
-                res.send(err);
+                res.status(500).send(err);
 
             res.json(orders);
-        });
-    }
+    })
+            .populate('user');
+}
 
 function getOrder(req, res) {
-        Order.findById(req.params.order_id, function(err,order) {
+        order.findById(req.params.order_id, function(err, order) {
             if (err)
-                res.send(err);
+                res.status(500).send(err);
             res.json(order);
-        });
-    }
+    });
+}
 
 function updateOrder(req, res) {
-        Order.findById(req.params.order_id, function(err, order) {
+        order.findById(req.params.order_id, function(err, order) {
             if (err)
                 res.send(err)
 
-            order.Rating = req.body.Rating;
-            order.Cost = req.body.Cost;
-            order.Canceled = req.body.Canceled;
-            order.Confirmed = req.body.Confirmed;
-            order.Completed = req.body.Completed;
+        order.user = req.body.user;
+        order.number = req.body.number;
+        order.status = req.body.status;
+        order.paid = req.body.paid;
 
+        order.save(function(err){
+            if (err)
+                res.status(500).send(err);
 
-            order.save(function(err){
-                if (err)
-                    res.send(err);
-
-                res.json({ message: 'Order Updated!' });
-            });
+            res.json({ message: 'Order Updated!' });
         });
-    }
+    });
+}
 
 function createOrder(req, res) {
-
-        var order = new Order();
-        
-            order.Rating = req.body.Rating;
-            order.Cost = req.body.Cost;
-            order.Canceled = req.body.Canceled;
-            order.Confirmed = req.body.Confirmed;
-            order.Completed = req.body.Completed;
-
-       order.save(function(err) {
+        var o = new order(req.body);
+        o.save(function(err) {
             if (err)
-                res.send(err);
+                return res.status(500).send(err);
 
             res.json({ message: 'Order created!' });
-        });
-    }
+    });
+}
 
 function deleteOrder(req, res) {
-        Order.remove({
+        order.remove({
             _id: req.params.order_id
         }, function(err, order) {
             if (err)
-                res.send(err);
+                res.status(500).send(err);
 
             res.json({ message: 'Order Deleted!' })
-        });
-    }
+    });
+}
 
 module.exports = router;
