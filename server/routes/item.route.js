@@ -26,7 +26,7 @@ function getAllItems(req, res) {
     }
 
 function getItem(req, res) {
-        item.findById(req.params.item_id, function(err, item) {
+        item.findById(req.params._id, function(err, item) {
             if (err)
                 res.status(500).send(err);
             res.json(item);
@@ -34,7 +34,7 @@ function getItem(req, res) {
     }
 
 function updateItem(req, res) {
-        item.findById(req.params.item_id, function(err, item) {
+        item.findById(req.params._id, function(err, item) {
             if (err)
                 res.send(err)
 
@@ -66,7 +66,7 @@ function createItem(req, res) {
 
 function deleteItem(req, res) {
         item.remove({
-            _id: req.params.item_id
+            _id: req.params._id
         }, function(err, item) {
             if (err)
                 res.status(500).send(err);

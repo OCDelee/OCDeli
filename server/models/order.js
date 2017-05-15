@@ -10,9 +10,17 @@ var orderSchema = new Schema ({
     total: Number,
     status: {
        type: String,
-       enum: ['Canceled', 'Confirmed', 'Completed']
+       enum: ['Canceled', 'Confirmed', 'Completed', 'Returned']
     },
     paid: Boolean
 })
 
 module.exports = mongoose.model('order', orderSchema);
+
+// {
+// 	"user": "",
+// 	"number": "",
+// 	"total": ,
+// 	"status": "",
+// 	"paid": true/false
+// }

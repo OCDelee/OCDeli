@@ -13,22 +13,16 @@ var userSchema = new Schema ({
         ref: 'order' 
     },
     userRole: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'userRole' 
+        type: String, 
+        enum: ['Admin', 'Customer', 'Employee']
     },
     firstName: String,
     lastName: String,
     phone: String,
     email: String,
-    username: { 
-        type: String, 
-        required: true, 
-        unique: true 
-    },
-    password: { 
-        type: String, 
-        required: true 
-    },
+    username: String, 
+    password: String, 
+    
 });
 
 userSchema.plugin(passportLocalMongoose);

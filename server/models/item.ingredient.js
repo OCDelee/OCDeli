@@ -11,7 +11,6 @@ var itemIngredientSchema = new Schema ({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'item'
     },
-    name: String
 })
 
 module.exports = mongoose.model('itemIngredient', itemIngredientSchema);

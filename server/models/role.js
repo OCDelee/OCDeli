@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+// var mongoose = require('mongoose');
+// var Schema = mongoose.Schema;
 
-var roleSchema = new Schema ({
-    name: String,
-})
+// var roleSchema = new Schema ({
+//     name: String,
+// })
 
-module.exports = mongoose.model('role', roleSchema);
+// module.exports = mongoose.model('role', roleSchema);

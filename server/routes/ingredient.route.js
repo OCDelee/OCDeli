@@ -25,7 +25,7 @@ function getAllIngredients(req, res) {
     }
 
 function getIngredient(req, res) {
-        ingredient.findById(req.params.ingredient_id, function(err, ingredient) {
+        ingredient.findById(req.params._id, function(err, ingredient) {
             if (err)
                 res.status(500).send(err);
             res.json(ingredient);
@@ -33,7 +33,7 @@ function getIngredient(req, res) {
     }
 
 function updateIngredient(req, res) {
-        ingredient.findById(req.params.ingredient_id, function(err, ingredient) {
+        ingredient.findById(req.params._id, function(err, ingredient) {
             if (err)
                 res.send(err)
 
@@ -70,7 +70,7 @@ function createIngredient(req, res) {
 
 function deleteIngredient(req, res) {
         ingredient.remove({
-            _id: req.params.ingredient_id
+            _id: req.params._id
         }, function(err, ingredient) {
             if (err)
                 res.status(500).send(err);

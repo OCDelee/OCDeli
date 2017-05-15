@@ -1,0 +1,23 @@
+{
+  "name": "ui",
+  "homepage": "https://github.com/OCDelee/OCDeli",
+  "authors": [
+    "Anton <antonmosk87@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "lodash": "^4.17.4",
+    "jquery": "^3.2.1",
+    "AdminLTE": "admin-lte#^2.3.11"
+  }
+}

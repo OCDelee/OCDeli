@@ -5,7 +5,6 @@ var passport = require('passport');
 var user = require('../models/user');
 var address = require('../models/address');
 var order = require('../models/order');
-var userRole = require('../models/userRole');
 
 router
     .post('/register', userRegister)
@@ -15,12 +14,11 @@ router
     .get('/', getAllUsers)
     .get('/:_id', getUser)
     .put('/:_id', updateUser)
-    .post('/', createUser);
 
 /////////
 
 function userRegister(req, res) {
-  user.register(new User({ username: req.body.username }),
+  user.register(new user({ username: req.body.username }),
     req.body.password, function(err, account) {
     if (err) {
       return res.status(500).json({
@@ -79,56 +77,52 @@ function userStatus(req, res) {
 ////////
 
 function getAllUsers(req, res) {
-        user.find(function(err, users){
+      user
+        .find(function(err, users){
             if (err)
-                res.status(500).send(err);
+               res.status(500).send(err);
 
             res.json(users);
-    })
-            .populate('order')
-            .populate('address')
-            .populate('userRole');
+        })
+        .populate('order')
+        .populate('address');
+            
 }
 
 function getUser(req, res) {
-        user.findById(req.params._id, function(err, user) {
-            if (err)
-                res.status(500).send(err);
+        user
+          .findById(req.params._id, function(err, user) {
+              if (err)
+                  res.status(500).send(err);
 
-            res.json(user);
-    });
+              res.json(user);
+      })
+        .populate('order')
+        .populate('address');
 }
 
 function updateUser(req, res) {
-        user.findById(req.params.user_id, function(err, user) {
-            if (err)
-                res.send(err)
+        user
+          .findById(req.params._id, function(err, user) {
+              if (err)
+                  return res.send(err)
 
-            user.userRole = req.body.userRole;
-            user.firstName = req.body.firstName;
-            user.lastName = req.body.lastName;
-            user.phone = req.body.phone;
-            user.email = req.body.email;
+              user.address = req.body.address;
+              user.order = req.body.order;
+              user.userRole = req.body.userRole;
+              user.firstName = req.body.firstName;
+              user.lastName = req.body.lastName;
+              user.phone = req.body.phone;
+              user.email = req.body.email;
 
-            user.save(function(err){
-                if (err)
-                    res.send(err);
+              user.save(function(err){
+                  if (err)
+                      res.send(err);
 
-                res.json({ message: 'User Updated!' });
-            });
-        });
-    }
-
-function createUser(req, res) {
-        var u = new user(req.body);
-
-        u.save(function(err) {
-            if (err)
-                return res.status(500).send(err);
-
-            res.json({ message: 'User created!' });
-    });
-}
+                  res.json({ message: 'User Updated!' });
+              });
+      });
+  }
 
 module.exports = router;
 

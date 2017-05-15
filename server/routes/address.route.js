@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const address = require('../models/address');
-const addressType = require('../models/address.type')
 const mongoose = require('mongoose');
 
 router
@@ -23,11 +22,11 @@ function getAllAddresses(req, res) {
 
             res.json(addresses);
         })
-            .populate('addressType');
+        .populate('user');
 }
 
 function updateAddress(req, res) {
-        address.findById(req.params.address_id, function (err, address) {  
+        address.findById(req.params._id, function (err, address) {  
             if (err) 
                 res.status(500).send(err);
 

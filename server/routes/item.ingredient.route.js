@@ -24,7 +24,7 @@ function getAllItemIngredients(req, res) {
 
             res.json(itemIngredients);
         })
-            .populate('ingredient')
+            .populate('ingredients')
             .populate('item');
     }
 
@@ -33,15 +33,15 @@ function getItemIngredient(req, res) {
             if (err)
                 res.status(500).send(err);
             res.json(itemIngredient);
-        });
+        })
+            .populate('ingredients')
+            .populate('item');
     }
 
 function updateItemIngredient(req, res){
-        itemIngredient.findById(req.params.itemIngredient._id, function (err, itemIngredient) {  
+        itemIngredient.findById(req.params._id, function (err, itemIngredient) {  
             if (err) 
                 res.status(500).send(err);
-            
-            itemIngredient.name = req.body.name;
 
             itemIngredient.save(function (err, itemIngredient) {
                 if (err) 
@@ -53,12 +53,14 @@ function updateItemIngredient(req, res){
 }
 
 function createItemIngredient(req, res) {
-    item.find({_id: req.body.item._id})
-    var i = new itemIngredient(req.body);
-    i.save(function(err) {
-        if (err)
-           return res.send();
-        res.json({ message: 'Item ingredient created!' });
+        itemIngredient.find({_id: req.body._id})
+
+        var i = new itemIngredient(req.body);
+        i.save(function(err) {
+            if (err)
+                return res.status(500).send(err);
+
+            res.json({ message: 'Item ingredient created!' });
     });
 }
 

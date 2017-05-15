@@ -11,6 +11,7 @@ var orderItemSchema = new Schema ({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'order' 
     }
+    
 })
 
 module.exports = mongoose.model('orderItem', orderItemSchema);

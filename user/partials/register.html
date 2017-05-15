@@ -1,6 +1,6 @@
 <div class="col-md-4">
     <h1>Register</h1>
-    <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+    <div ng-show="registerCtrl.error" class="alert alert-danger">{{registerCtrl.errorMessage}}</div>
     <form class="form" ng-submit="registerCtrl.register()">
         <div class="form-group">
             <label>Email</label>
@@ -11,7 +11,7 @@
                 <input type="password" class="form-control" name="password" ng-model="registerCtrl.registerForm.password" required>
         </div>
         <div>
-            <button type="submit" class="btn btn-default" ng-disabled="disabled">Register</button>
+            <button type="submit" class="btn btn-default" ng-disabled="registerCtrl.disabled">Register</button>
         </div>
     </form>
 </div>

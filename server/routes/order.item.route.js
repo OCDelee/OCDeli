@@ -37,7 +37,7 @@ function getOrderItem(req, res) {
     }
 
 function updateOrderItem(req, res){
-        orderItem.findById(req.params.orderItem._id, function (err, orderItem) {  
+        orderItem.findById(req.params._id, function (err, orderItem) {  
             if (err) 
                 res.status(500).send(err);
 
@@ -62,7 +62,7 @@ function createOrderItem(req, res) {
 }
 
 function deleteOrderItem(req, res) {
-        orderItem.remove({_id: req.params.orderItem_id}, function(err, orderItem) {
+        orderItem.remove({_id: req.params._id}, function(err, orderItem) {
             if (err)
                 res.status(500).send(err);
 

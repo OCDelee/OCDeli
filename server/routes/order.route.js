@@ -27,7 +27,7 @@ function getAllOrders(req, res) {
 }
 
 function getOrder(req, res) {
-        order.findById(req.params.order_id, function(err, order) {
+        order.findById(req.params._id, function(err, order) {
             if (err)
                 res.status(500).send(err);
             res.json(order);
@@ -35,7 +35,7 @@ function getOrder(req, res) {
 }
 
 function updateOrder(req, res) {
-        order.findById(req.params.order_id, function(err, order) {
+        order.findById(req.params._id, function(err, order) {
             if (err)
                 res.send(err)
 
@@ -65,7 +65,7 @@ function createOrder(req, res) {
 
 function deleteOrder(req, res) {
         order.remove({
-            _id: req.params.order_id
+            _id: req.params._id
         }, function(err, order) {
             if (err)
                 res.status(500).send(err);
