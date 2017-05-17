@@ -38,7 +38,7 @@
     })
 
     .run(function($rootScope, $state, $location, authServiceFactory) {
-        $rootScope.$on('$routeChangeStart',
+        $rootScope.$on('$stateChangeStart',
         function (event, toState, toParams, fromState, fromParams) {
             authServiceFactory.getUserStatus()
             .then(function() {

@@ -9,6 +9,10 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const cors = require('cors');
+const keyPublishable = process.env.pk_test_L6fEVgzAFeoFv1Yy3kGtFwv3;
+var stripe = require("stripe")(
+  "sk_test_Y08t8uauahS89pWAFR1S9qEI"
+);
 
 // route dependencies
 const addressRoute = require('./routes/address.route');
@@ -32,7 +36,7 @@ var app = express();
 
 
 // middleware
-app.use(express.static(path.join(__dirname, '../user')));
+app.use(express.static("public"));
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -46,6 +50,30 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// stripe
+app.post("/charge", (req, res) => {
+  let amount = 500;
+
+  
+  stripe.customers.create({
+    email: req.body.email,
+    card: req.body.id
+  })
+  .then(customer =>
+    stripe.charges.create({
+      amount,
+      description: "Sample Charge",
+      currency: "usd",
+      customer: customer.id
+    }))
+  .then(charge => res.send(charge))
+  .catch(err => {
+    console.log("Error:", err);
+    res.status(500).send({error: "Purchase Failed"});
+  });
+});
+
 
 // routes
 app.use('/api/address', addressRoute);

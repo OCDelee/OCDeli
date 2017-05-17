@@ -20,9 +20,16 @@ var userSchema = new Schema ({
     lastName: String,
     phone: String,
     email: String,
-    username: String, 
-    password: String, 
-    
+    username: { 
+        type: String,
+        lowercase: true,
+        required: true,
+        unique: true
+    }, 
+    password: {
+        type: String,
+        required: true 
+    },
 });
 
 userSchema.plugin(passportLocalMongoose);

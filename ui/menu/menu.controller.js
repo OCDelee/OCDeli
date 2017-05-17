@@ -13,9 +13,12 @@
 
             vm.menu = {};
             vm.itemIngredients = {};
-            vm.orderItemTotal = orderItemTotal;
+            vm.orderItemTotal = 0;
             vm.allIngredients = [];
             vm.additionalIngredients = [];
+            vm.checkedIngredients = [];
+            vm.initialIngredientChecked = false;
+
             // vm.ingredientAdded = false;
             activate();
 
@@ -28,9 +31,6 @@
                     .catch(function(error) {
                         alert(error);
                     });
-                
-              getAllIngredients()
-              getAdditionalIngredients(vm.allIngredients, vm.itemIngredients.ingredients);
             }
 
 
@@ -40,6 +40,7 @@
                 .getItemIngredientsByItemId(id)
                 .then(function(itemIngredient) {
                    vm.itemIngredients = itemIngredient;
+                   vm.orderItemTotal = vm.itemIngredients.item.price;
                 });
             }
 
@@ -51,20 +52,20 @@
                 });
             }
 
-            function orderItemTotal() {
-                if(!vm.itemIngredients.item) {
-                    return 0;
-                }
+            // function orderItemTotal() {
+            //     if(!vm.itemIngredients.item) {
+            //         return 0;
+            //     }
                 
 
-                var startPrice = vm.itemIngredients.item.price;
+            //     var startPrice = vm.itemIngredients.item.price;
                 
-                var checkedIngredients = vm.itemIngredients.ingredients.filter(i => i.added);
-                var costOfCheckedIngredients = checkedIngredients.reduce((acc, ingredient) => acc + parseFloat(ingredient.total), 0);
-                var totalCost = startPrice + costOfCheckedIngredients;
+            //     var checkedIngredients = vm.itemIngredients.ingredients.filter(i => i.added);
+            //     var costOfCheckedIngredients = checkedIngredients.reduce((acc, ingredient) => acc + parseFloat(ingredient.total), 0);
+            //     var totalCost = startPrice + costOfCheckedIngredients;
 
-                return totalCost;
-            }
+            //     return totalCost;
+            // }
 
             // vm.getAllIngredients = function(){
             //   menuFactory
@@ -74,20 +75,48 @@
             //     })
             // }
 
-            function getAdditionalIngredients() {
+            // function getAdditionalIngredients() {
+            //     var ing = {};
+            //     var itemIngredientsIds = _.map(vm.itemIngredients.ingredients, '_id');
+            //     for (var i = 0; i < itemIngredientsIds.length; i++){
+            //         ing = _.find
+            //     }
+            //     vm.additionalIngredients = _.difference(allIngredientIds, itemIngredientsIds);
+            // }; 
+
+            vm.getItemDetails = function(id){
+                var x = function() {
+                    getItemIngredientsByItemId(id);
+                    getAllIngredients();
                 var itemIngredientsIds = _.map(vm.itemIngredients.ingredients, '_id');
                 var allIngredientIds = _.map(vm.allIngredients, '_id');
                 vm.additionalIngredients = _.difference(allIngredientIds, itemIngredientsIds);
-            } 
+                };
+                x();
+            };
 
-            vm.getItemDetails = function(id){
+            // vm.getAdditionalIngredients = function() {
+            //         var itemIngredientsIds = _.map(vm.itemIngredients.ingredients, '_id');
+            //         // for (var i = 0; i < vm.allIngredients.length; i++) {
+            //         //     for (var j = 0; j < itemIngredientsIds.length; j++) {
+            //         //         if (vm.allIngredients[i]._id != itemIngredientsIds[j]) {
+            //         //             vm.additionalIngredients.push(vm.allIngredients[i])
+            //         //         }
+            //         //     }
+            //         // }
+            //         for(var i = 0; i < itemIngredientsIds.length; i++){
+            //             var tempArray = _.filter(vm.allIngredients, !_matchesProperty('_id', itemIngredientsIds[i]));
+            //             vm.additionalIngredients = _.union(tempArray);
+            //         }
+            // }
 
-                getItemIngredientsByItemId(id)
-                    .then(getAllIngredients)
-                    .then(getAdditionalIngredients)
-                    .catch(function(err) {
-                        console.log(err);
-                    });
+            vm.itemIngredientsChecked = function (ingredientId) {
+                for(var i = 0; i < vm.itemIngredients.ingredients.length; i++) {
+                    if (vm.itemIngredients.ingredients[i]._id == ingredientId){
+                        return true;
+                    } 
+                }
+                return false;
             };
         }
 })();

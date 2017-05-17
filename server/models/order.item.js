@@ -3,10 +3,15 @@ var Schema = mongoose.Schema;
 
 var orderItemSchema = new Schema ({
     
-    item: { 
+    // item: { 
+    //     type: mongoose.Schema.Types.ObjectId, 
+    //     ref: 'item' 
+    // },
+    itemIngredient: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'item' 
+        ref: 'itemIngredient' 
     },
+
     order: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'order' 

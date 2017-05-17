@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
       </button>
         <a class="navbar-brand" href="#">
-        <img src="" width="30" height="30" alt="">
+        <!--<img src="./images/ocdelilongsmall.png" width="48" height="20" alt="">-->
         </a>
     </div>
 
@@ -18,7 +18,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Blog</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">News</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
@@ -46,7 +47,7 @@
     <div class="row" >
     <div class="col-md-4" ng-repeat="item in menuCtrl.menu">
         <div class="thumbnail">
-        <img src="{{item.imagePath}}" alt="..." data-toggle="modal" data-target="#myModal" ng-click="menuCtrl.getItemDetails(item._id)">
+        <img src="{{item.imagePath}}" alt="..." data-toggle="modal" data-target="#myModal" ng-click="menuCtrl.getItemDetails(item._id);">
         <div class="caption">
             <h3>{{item.name}}</h3>
             <p>{{item.description}}</p>
@@ -76,11 +77,16 @@
                         <th>Price</th>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="ingredient in menuCtrl.additionalIngredients">
-                            <td><input type="checkbox" ng-model="ingredient.added"></td>
+                        <tr ng-repeat="ingredient in menuCtrl.allIngredients | orderBy: -['-checked']:false">
+                            <td><input type="checkbox" ng-checked="menuCtrl.itemIngredientsChecked(ingredient._id)"></td>
                             <td>{{ingredient.name}}</td>
                             <td>${{ingredient.total}}</td>
                         </tr>
+                        <!--<tr ng-repeat="ingredient in menuCtrl.itemIngredients.ingredients">
+                            <td><input type="checkbox" ng-checked="menuCtrl.itemIngredientsChecked(ingredient._id)"></td>
+                            <td>{{ingredient.name}}</td>
+                            <td>${{ingredient.total}}</td>
+                        </tr>-->
                     </tbody>
                 </table>
 
@@ -103,7 +109,7 @@
                 </div>
                 <div class="col-md-8">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add to cart&nbsp;&nbsp;${{menuCtrl.orderItemTotal()}}</button>
+                    <button type="button" class="btn btn-primary">Add to cart&nbsp;&nbsp;${{menuCtrl.orderItemTotal}}</button>
                 </div>
             </div>
         </div>

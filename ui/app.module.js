@@ -4,8 +4,8 @@
     angular
         .module('app', [
           'ui.router',
-          'app.menu'
-          // 'angular-stripe',
+          'app.menu',
+          // 'app.ocdeli'
           // 'credit-cards'
 
         ])
@@ -25,9 +25,9 @@
               controller: 'CheckoutController as checkoutCtrl',
               templateUrl: './views/checkout.html'
             })
-            // .state('admin', {
-            //   url: '/admin',
-            //   templateUrl: '../admin/dist/index.html'
+            // .state('payment', {
+            //   url: '/payments',
+            //   templateUrl: './views/payment.html'
             // })
             // .state('sales', {
             //   url: '/sales',

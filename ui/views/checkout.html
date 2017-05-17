@@ -11,7 +11,11 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="firstName">First Name</label>  
   <div class="col-md-4">
-  <input id="firstName" name="firstName" type="text" placeholder="" class="form-control input-md" required="">
+  <input id="firstName" 
+         name="firstName" 
+         type="text" 
+         ng-model="checkoutCtrl.firstName" 
+         class="form-control input-md" required />
     
   </div>
 </div>
@@ -20,7 +24,12 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="lastName">Last Name</label>  
   <div class="col-md-4">
-  <input id="lastName" name="lastName" type="text" placeholder="" class="form-control input-md" required="">
+  <input id="lastName" 
+         name="lastName" 
+         type="text" 
+         ng-model="checkoutCtrl.lastName" 
+         class="form-control input-md" 
+         required />
     
   </div>
 </div>
@@ -29,7 +38,12 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="phone">Phone</label>  
   <div class="col-md-4">
-  <input id="phone" name="phone" type="text" placeholder="" class="form-control input-md" required="">
+  <input id="phone" 
+         name="phone" 
+         type="text" 
+         ng-model="checkoutCtrl.phone" 
+         class="form-control input-md" 
+         required= />
     
   </div>
 </div>
@@ -38,7 +52,12 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="email">Email</label>  
   <div class="col-md-4">
-  <input id="email" name="email" type="text" placeholder="" class="form-control input-md" required="">
+  <input id="email" 
+         name="email" 
+         type="text" 
+         ng-model="checkoutCtrl.email" 
+         class="form-control input-md" 
+         required />
     
   </div>
 </div>
@@ -47,16 +66,27 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="address1">Address Line1</label>  
   <div class="col-md-4">
-  <input id="address1" name="address1" type="text" placeholder="" class="form-control input-md" required="">
+  <input id="address1" 
+         name="address1" 
+         type="text" 
+         ng-model="checkoutCtrl.address1" 
+         class="form-control input-md" 
+         required />
+
   <span class="help-block">Street address, P.O. box, company name, c/o</span>  
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="address1"></label>  
+  <label class="col-md-4 control-label" for="address2"></label>  
   <div class="col-md-4">
-  <input id="address1" name="address1" type="text" placeholder="" class="form-control input-md">
+  <input id="address2" 
+         name="address2" 
+         type="text" 
+         ng-model="checkoutCtrl.address2" 
+         class="form-control input-md">
+
   <span class="help-block">Apartment, suite, unit, building, floor, etc.</span>  
   </div>
 </div>
@@ -65,7 +95,12 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="city">City</label>  
   <div class="col-md-4">
-  <input id="city" name="city" type="text" placeholder="" class="form-control input-md" required="">
+  <input id="city" 
+         name="city" 
+         type="text" 
+         ng-model="checkoutCtrl.city" 
+         class="form-control input-md" 
+         required />
     
   </div>
 </div>
@@ -74,7 +109,12 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="state">State/Province/Region</label>  
   <div class="col-md-4">
-  <input id="state" name="state" type="text" placeholder="" class="form-control input-md" required="">
+  <input id="state" 
+         name="state" 
+         type="text" 
+         ng-model="checkoutCtrl.state" 
+         class="form-control input-md" 
+         required />
     
   </div>
 </div>
@@ -83,7 +123,12 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="zip">Zip</label>  
   <div class="col-md-4">
-  <input id="zip" name="zip" type="text" placeholder="" class="form-control input-md" required="">
+  <input id="zip" 
+         name="zip" 
+         type="text" 
+         ng-model="checkoutCtrl.zip" 
+         class="form-control input-md" 
+         required />
     
   </div>
 </div>
@@ -102,8 +147,4 @@
   <div class="col-md-4">
     <button id="checkoutButton" name="checkoutButton" class="btn btn-success">Place Order</button>
   </div>
-</div>
-
-</fieldset>
-</form>
 </div>
