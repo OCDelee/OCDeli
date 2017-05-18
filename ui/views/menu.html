@@ -77,16 +77,16 @@
                         <th>Price</th>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="ingredient in menuCtrl.allIngredients | orderBy: -['-checked']:false">
-                            <td><input type="checkbox" ng-checked="menuCtrl.itemIngredientsChecked(ingredient._id)"></td>
+                        <tr ng-repeat="ingredient in menuCtrl.item.ingredients">
+                            <td><input type="checkbox" ng-checked="true"></td>
                             <td>{{ingredient.name}}</td>
                             <td>${{ingredient.total}}</td>
                         </tr>
-                        <!--<tr ng-repeat="ingredient in menuCtrl.itemIngredients.ingredients">
-                            <td><input type="checkbox" ng-checked="menuCtrl.itemIngredientsChecked(ingredient._id)"></td>
+                        <tr ng-repeat="ingredient in menuCtrl.item.additionalIngredients">
+                            <td><input type="checkbox" ng-checked="false"></td>
                             <td>{{ingredient.name}}</td>
                             <td>${{ingredient.total}}</td>
-                        </tr>-->
+                        </tr>
                     </tbody>
                 </table>
 

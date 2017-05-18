@@ -3,13 +3,9 @@ var Schema = mongoose.Schema;
 
 var orderItemSchema = new Schema ({
     
-    // item: { 
-    //     type: mongoose.Schema.Types.ObjectId, 
-    //     ref: 'item' 
-    // },
-    itemIngredient: { 
+    item: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'itemIngredient' 
+        ref: 'item' 
     },
 
     order: { 

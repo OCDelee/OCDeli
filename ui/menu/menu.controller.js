@@ -19,6 +19,14 @@
             vm.checkedIngredients = [];
             vm.initialIngredientChecked = false;
 
+            vm.item = {
+                details: vm.itemIngredients.item,
+                ingredients: vm.itemIngredients.ingredients,
+                allIngredients: getAllIngredientsFunc(),
+                additionalIngredients: getAdditionalIngredientsFunc()
+
+            };
+
             // vm.ingredientAdded = false;
             activate();
 
@@ -31,9 +39,30 @@
                     .catch(function(error) {
                         alert(error);
                     });
+
+                
+        
             }
 
 
+            function getAllIngredientsFunc (){
+                return function(){
+                    return menuFactory
+                        .getAllIngredients()
+                        .then(function(ingredients) {
+                            vm.allIngredients = ingredients;
+                    });
+                };
+            }
+
+            function getAdditionalIngredientsFunc() {
+                return function(){
+                    var allIngredients = vm.item.allIngredients;
+                    var itemIngredients = vm.item.ingredients;
+
+                    return _.difference(allIngredients, itemIngredients);
+                };
+            }
 
             function getItemIngredientsByItemId(id) {
                 return menuFactory
@@ -44,13 +73,13 @@
                 });
             }
 
-            function getAllIngredients() {
-                return menuFactory
-                .getAllIngredients()
-                .then(function(ingredients) {
-                   vm.allIngredients = ingredients;
-                });
-            }
+            // function getAllIngredients() {
+            //     return menuFactory
+            //     .getAllIngredients()
+            //     .then(function(ingredients) {
+            //        vm.allIngredients = ingredients;
+            //     });
+            // }
 
             // function orderItemTotal() {
             //     if(!vm.itemIngredients.item) {
@@ -85,14 +114,16 @@
             // }; 
 
             vm.getItemDetails = function(id){
-                var x = function() {
-                    getItemIngredientsByItemId(id);
-                    getAllIngredients();
-                var itemIngredientsIds = _.map(vm.itemIngredients.ingredients, '_id');
-                var allIngredientIds = _.map(vm.allIngredients, '_id');
-                vm.additionalIngredients = _.difference(allIngredientIds, itemIngredientsIds);
-                };
-                x();
+                // var x = function() {
+                //     getItemIngredientsByItemId(id);
+                //     getAllIngredients();
+                // var itemIngredientsIds = _.map(vm.itemIngredients.ingredients, '_id');
+                // var allIngredientIds = _.map(vm.allIngredients, '_id');
+                // vm.additionalIngredients = _.difference(allIngredientIds, itemIngredientsIds);
+                // };
+                // x();
+                getItemIngredientsByItemId(id);
+
             };
 
             // vm.getAdditionalIngredients = function() {
@@ -110,13 +141,15 @@
             //         }
             // }
 
-            vm.itemIngredientsChecked = function (ingredientId) {
-                for(var i = 0; i < vm.itemIngredients.ingredients.length; i++) {
-                    if (vm.itemIngredients.ingredients[i]._id == ingredientId){
-                        return true;
-                    } 
-                }
-                return false;
-            };
+            function itemIngredientsCheckedFunc(ingredientId) {
+                return function () {
+                    for(var i = 0; i < vm.itemIngredients.ingredients.length; i++) {
+                        if (vm.itemIngredients.ingredients[i]._id == ingredientId){
+                            return true;
+                        } 
+                    }
+                    return false;
+                };
+            }
         }
 })();

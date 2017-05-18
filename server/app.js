@@ -18,7 +18,6 @@ var stripe = require("stripe")(
 const addressRoute = require('./routes/address.route');
 // const addressTypeRoute = require('./routes/address.type.route');
 const ingredientRoute = require('./routes/ingredient.route');
-const itemIngredientRoute = require('./routes/item.ingredient.route');
 const itemRoute = require('./routes/item.route');
 const orderItemRoute = require('./routes/order.item.route');
 const orderRoute = require('./routes/order.route');
@@ -79,7 +78,6 @@ app.post("/charge", (req, res) => {
 app.use('/api/address', addressRoute);
 // app.use('/api/addresstype', addressTypeRoute);
 app.use('/api/ingredient', ingredientRoute);
-app.use('/api/itemingredient', itemIngredientRoute);
 app.use('/api/item', itemRoute);
 app.use('/api/orderitem', orderItemRoute);
 app.use('/api/order', orderRoute);

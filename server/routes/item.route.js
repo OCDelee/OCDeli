@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const ingredient = require('../models/ingredient');
 const item = require('../models/item');
 const mongoose = require('mongoose');
 
 router
     .get('/', getAllItems)
-    .get('/:_id', getItem)
+    .get('/:_id', getItemById)
     .put('/:_id', updateItem)
     .post('/', createItem)
-    .delete('/:_id', deleteItem);
+    // .delete('/:_id', delete);
    
 
 
@@ -22,57 +23,43 @@ function getAllItems(req, res) {
 
             res.json(items);
         })
-            .populate('ingredient');
+            .populate('ingredients');
     }
 
-function getItem(req, res) {
+function getItemById(req, res) {
         item.findById(req.params._id, function(err, item) {
             if (err)
                 res.status(500).send(err);
             res.json(item);
-        });
+        })
+            .populate('ingredients');
     }
 
-function updateItem(req, res) {
-        item.findById(req.params._id, function(err, item) {
-            if (err)
-                res.send(err)
-
-            item.imagePath = req.body.imagePath;
-            item.name = req.body.name;
-            item.description = req.body.description;
-            item.price = req.body.price;
-
-
-            item.save(function(err){
-                if (err)
-                    res.status(500).send(err);
-
-                res.json({ message: 'Item Updated!' });
-        });
-    });
-}
-
-
-function createItem(req, res) {
-            var a = new item(req.body);
-            a.save(function(err) {
-                if (err)
-                    return res.send();
-                    
-                res.json({ message: 'Item created!' });
-    });
-}
-
-function deleteItem(req, res) {
-        item.remove({
-            _id: req.params._id
-        }, function(err, item) {
-            if (err)
+function updateItem(req, res){
+        item.findById(req.params._id, function (err, item) {  
+            if (err) 
                 res.status(500).send(err);
 
-            res.json({ message: 'Item Deleted!' })
-        });
+            item.save(function (err, item) {
+                if (err) 
+                    res.status(500).send(err);
+                
+                res.send(item);
+            });
+    })
 }
+
+function createItem(req, res) {
+        item.find({_id: req.body._id})
+
+        var i = new item(req.body);
+        i.save(function(err) {
+            if (err)
+                return res.status(500).send(err);
+
+            res.json({ message: 'Item created!' });
+    });
+}
+
 
 module.exports = router;
