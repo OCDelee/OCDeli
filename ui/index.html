@@ -1,15 +1,86 @@
-<html ng-app="app">
+<html>
 
 <head>
   <meta charset="utf-8">
-  <title>Please work</title>
+  <title>OC Deli</title>
+
+
+
+
   <!-- styles -->
   <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
   
 </head>
 
-<body>
+<body ng-app="app" ng-controller="MainController as mainCtrl">
+    <!-- Nav -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+          <a class="navbar-brand" href="#">
+          <!--<img src="./images/ocdelilongsmall.png" width="48" height="20" alt="">-->
+          </a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">News</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a ng-show="!mainCtrl.isLoggedIn" ui-sref='authenticate'>Login</a></li>
+          <li><a ng-show="!mainCtrl.isLoggedIn" ui-sref='register'>Register</a></li>
+          <li><a ng-show="mainCtrl.isLoggedIn" ui-sref='logout' ng-click="mainCtrl.logout()">Logout</a></li>
+          <li class="dropdown">
+            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cart <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li>
+                  <a href="#"></a>
+                  <table class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th>Qty</th>
+                              <th>Item</th>
+                              <th>Subtotal</th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr ng-repeat="cartItem in mainCtrl.cart">
+                              <td>{{cartItem.itemQty}}</td>
+                              <td>{{cartItem.item.name}}</td>
+                              <td>{{cartItem.itemQty * cartItem.itemTotal}}</td>
+                              <td><i class="fa fa-trash-o" aria-hidden="true"></i></td>
+                          </tr>
+                          <tr>
+                              <td colspan="3">Total:</td>
+                              <td><span ng-bind="mainCtrl.cartTotal"></span></td>    
+                          </tr>
+                      </tbody>
+                  </table>
+              </li>
+
+              <li role="separator" class="divider"></li>
+              <li><a ui-sref="checkout">Checkout</a></li>
+            </ul>
+          </li>
+          <li><a ng-show="mainCtrl.isLoggedIn" ui-sref="profile"> {{mainCtrl.username}} </a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
 
 
     <div ui-view></div>
@@ -24,10 +95,27 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
   <script src="https://unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
-	<script src="/app.module.js"></script>
-	<script src="/menu/menu.module.js"></script>
-	<script src="/menu/menu.controller.js"></script>
+  <script src="/app.module.js"></script>
+  <script src="/controllers/main.controller.js"></script>
+
+
+  <script src="/menu/menu.module.js"></script>
+  <script src="/menu/order.module.js"></script>
+
+
+	<script src="/controllers/order.controller.js"></script>
+  <script src="/controllers/register.controller.js"></script>
+  <script src="/checkout/checkout.module.js"></script>
+	<script src="/checkout/checkout.controller.js"></script>
+	<script src="/core/item.service.js"></script>
+  <script src="/core/auth.service.js"></script>
+  <script src="/core/user.factory.js"></script>
+	<script src="/controllers/menu.controller.js"></script>
 	<script src="/core/menu.factory.js"></script>
+  <script src="/core/order.factory.js"></script>
+
+
+
 
 	<!-- endinject -->
 </body>

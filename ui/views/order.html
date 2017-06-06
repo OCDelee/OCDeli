@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="container-fluid">
+                <h3>Your Order Confirmation</h3>
+                <p>Order Date: {{orderCtrl.order.date}}</p>
+                <p>Order Number: {{orderCtrl.order.number}}</p>
+                <p>Order Total: {{orderCtrl.orderTotal}}</p>
+                <p>Order Status: {{orderCtrl.order.status}}</p>
+                <p>Order Paid: {{orderCtrl.order.paid}}</p>
+            </div>
+            <div class="container-fluid">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Qty</th>
+                            <th>Item</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="orderItem in orderCtrl.orderItems">
+                            <td>{{orderItem.itemQty}}</td>
+                            <td>{{orderItem.item.name}}</td>
+                            <td>{{orderItem.itemQty * orderItem.itemTotal}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Total:</td>
+                            <td><span ng-bind="orderCtrl.orderTotal"></span></td>    
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div class="container-fluid">
+                    <h3 style="text-align:center">Thank you!</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

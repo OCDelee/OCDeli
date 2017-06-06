@@ -3,15 +3,13 @@ var Schema = mongoose.Schema;
 
 var orderItemSchema = new Schema ({
     
-    item: { 
+    items: [{ 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'item' 
-    },
-
-    order: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'order' 
-    }
+    }],
+    itemTotal: Number,
+    itemQty: Number,
+    specialInstructions: String
     
 })
 

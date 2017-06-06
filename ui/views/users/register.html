@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="page-header">
+                <h1>User Registration<h1>
+            </div>
+
+            <form ng-submit="regCtrl.regUser(regData);">
+                <label>Email</label>
+                <input class="form-control" type="text" name="email" ng-model="regCtrl.regData.email">
+                <br>
+                <label>Username</label>
+                <input class="form-control" type="text" name="username" ng-model="regCtrl.regData.username">
+                <br>
+                <label>Password</label>
+                <input class="form-control" type="password" name="password" ng-model="regCtrl.regData.password">
+                <br>
+                <button class="btn btn-primary" type="submit">Register</button>
+            </form>
+
+            <div class="row show-hide-message" ng-show="regCtrl.successMsg">
+                <div class="alert alert-success">{{ regCtrl.successMsg }}</div>
+            </div>
+
+            <br>
+
+            <div class="jumbotron text-center" ng-show="regCtrl.loading">
+                <span class="glyphicon glyphicon-repeat spinner"></span>
+                <p>Loading...</p>
+            </div>
+
+            <br>
+
+            <div class="row show-hide-message" ng-show="regCtrl.errorMsg">
+                <div class="alert alert-danger">{{regCtrl.errorMsg}}</div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

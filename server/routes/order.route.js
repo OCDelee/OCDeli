@@ -39,15 +39,19 @@ function updateOrder(req, res) {
             if (err)
                 res.send(err)
 
-        order.user = req.body.user;
-        order.number = req.body.number;
-        order.status = req.body.status;
-        order.paid = req.body.paid;
+        // order.username =  vm.tempOrder.username;
+        // order.date =  vm.tempOrder.date;
+        // order.number =  vm.tempOrder.number;
+        // order.total =  vm.tempOrder.total;
+        // order.status =  vm.tempOrder.status;
+        // order.paid =  vm.tempOrder.paid;
+        // order.orderItems =  vm.orderItems
+        // order.orderItems = req.body.orderItems;
 
-        order.save(function(err){
+        order.save(function(err, order){
             if (err)
                 res.status(500).send(err);
-
+            res.send(order);
             res.json({ message: 'Order Updated!' });
         });
     });

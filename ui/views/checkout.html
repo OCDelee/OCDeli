@@ -1,150 +1,248 @@
 <div class="container-fluid">
-<form class="form-horizontal">
-<fieldset>
 
-<!-- Form Name -->
-<div class="center">
-<legend>Checkout</legend>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="firstName">First Name</label>  
-  <div class="col-md-4">
-  <input id="firstName" 
-         name="firstName" 
-         type="text" 
-         ng-model="checkoutCtrl.firstName" 
-         class="form-control input-md" required />
-    
+  <!-- Form Name -->
+  <div class="center">
+    <legend style="text-align: center;">Checkout</legend>
   </div>
+
+<div class="row">
+    <div class="col-md-6">
+      <!--Sign in/Sign up-->
+      <div class="card" ng-show="checkoutCtrl.loginOrRegisterShown">
+        <div class="card-block">
+          <h4 class="card-title">
+            Sign In or Register
+          </h4>
+          <br>
+          <button class="btn btn-success" ng-click="checkoutCtrl.showRegister()">Register</button>
+          <button class="btn btn-success" ng-click="checkoutCtrl.showLogin()">Sign In</button>
+        </div>
+      </div>
+      <!--Login-->
+      <div class="card" ng-show="checkoutCtrl.loginShown">
+        <div class="card-block">
+          <h4 class="card-title">
+            Sign In
+          </h4>
+          <div class="card-text">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="username">Username</label>  
+                <div class="col-md-4">
+                  <input id="username" 
+                      name="username" 
+                      type="text" 
+                      ng-model="checkoutCtrl.username" 
+                      class="form-control input-md" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="password">Password</label>  
+                <div class="col-md-4">
+                  <input id="password" 
+                      name="password" 
+                      type="text" 
+                      ng-model="checkoutCtrl.password" 
+                      class="form-control input-md" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="checkoutButton"></label>
+                <div class="col-md-4">
+                  <button id="checkoutButton" name="checkoutButton" class="btn btn-success">Sign In</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Register -->
+      <div class="card" ng-show="checkoutCtrl.registerShown">
+        <div class="card-block">
+          <h4 class="card-title">
+            Register
+          </h4>
+          <form class="form-horizontal">
+          <!-- First Name-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="firstName">First Name</label>  
+            <div class="col-md-4">
+              <input id="firstName" 
+                  name="firstName" 
+                  type="text" 
+                  ng-model="checkoutCtrl.firstName" 
+                  class="form-control input-md" required />
+            </div>
+          </div>
+
+          <!-- Last Name -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="lastName">Last Name</label>  
+            <div class="col-md-4">
+              <input id="lastName" 
+                  name="lastName" 
+                  type="text" 
+                  ng-model="checkoutCtrl.lastName" 
+                  class="form-control input-md" 
+                  required />
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="phone">Phone</label>  
+            <div class="col-md-4">
+              <input id="phone" 
+                  name="phone" 
+                  type="text" 
+                  ng-model="checkoutCtrl.phone" 
+                  class="form-control input-md" 
+                  required= />
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="email">Email</label>  
+            <div class="col-md-4">
+              <input id="email" 
+                  name="email" 
+                  type="text" 
+                  ng-model="checkoutCtrl.email" 
+                  class="form-control input-md" 
+                  required />
+            </div>
+          </div>
+
+          <!-- Address1 -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="address1">Address Line1</label>  
+            <div class="col-md-4">
+            <input id="address1" 
+                  name="address1" 
+                  type="text" 
+                  ng-model="checkoutCtrl.address1" 
+                  class="form-control input-md" 
+                  required />
+            <span class="help-block">Street address, P.O. box, company name, c/o</span>  
+            </div>
+          </div>
+
+          <!-- Address2 -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="address2">Address Line2</label>  
+            <div class="col-md-4">
+            <input id="address2" 
+                  name="address2" 
+                  type="text" 
+                  ng-model="checkoutCtrl.address2" 
+                  class="form-control input-md">
+            <span class="help-block">Apartment, suite, unit, building, floor, etc.</span>  
+            </div>
+          </div>
+
+          <!-- City -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="city">City</label>  
+            <div class="col-md-4">
+            <input id="city" 
+                  name="city" 
+                  type="text" 
+                  ng-model="checkoutCtrl.city" 
+                  class="form-control input-md" 
+                  required />
+            </div>
+          </div>
+
+          <!-- State -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="state">State/Province/Region</label>  
+            <div class="col-md-4">
+            <input id="state" 
+                  name="state" 
+                  type="text" 
+                  ng-model="checkoutCtrl.state" 
+                  class="form-control input-md" 
+                  required />
+            </div>
+          </div>
+
+          <!-- Zip -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="zip">Zip</label>  
+            <div class="col-md-4">
+            <input id="zip" 
+                  name="zip" 
+                  type="text" 
+                  ng-model="checkoutCtrl.zip" 
+                  class="form-control input-md" 
+                  required />
+            </div>
+          </div>
+
+          <!-- Note -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="deliveryNote">Add delivery note</label>
+            <div class="col-md-4">                     
+              <textarea class="form-control" id="deliveryNote" name="deliveryNote"></textarea>
+            </div>
+          </div>
+
+          <!-- Button: Place Order -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="checkoutButton"></label>
+            <div class="col-md-4">
+              <button id="checkoutButton" name="checkoutButton" class="btn btn-success">Register</button>
+            </div>
+          </div>
+          </form>          
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-block">
+          <div class="card-title">
+            Your Order
+          </div>
+          <br>
+          <table class="table table-hover">
+              <thead>
+                  <tr>
+                      <th>Qty</th>
+                      <th>Item</th>
+                      <th>Subtotal</th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="cartItem in checkoutCtrl.cart">
+                      <td>{{cartItem.itemQty}}</td>
+                      <td>{{cartItem.item.name}}</td>
+                      <td>{{cartItem.itemQty * cartItem.itemTotal}}</td>
+                      <td><i class="fa fa-times" aria-hidden="true"></i></td>
+                  </tr>
+                  <tr>
+                      <td colspan="3">Total:</td>
+                      <td><span ng-bind="checkoutCtrl.cartTotal"></span></td>    
+                  </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td><button class="btn btn-success"><a ui-sref="order">Place Order</a></button></td>
+                </tr>
+              </tfoot>
+          </table>
+
+        </div>
+      </div>
+    </div>
 </div>
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="lastName">Last Name</label>  
-  <div class="col-md-4">
-  <input id="lastName" 
-         name="lastName" 
-         type="text" 
-         ng-model="checkoutCtrl.lastName" 
-         class="form-control input-md" 
-         required />
-    
-  </div>
-</div>
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="phone">Phone</label>  
-  <div class="col-md-4">
-  <input id="phone" 
-         name="phone" 
-         type="text" 
-         ng-model="checkoutCtrl.phone" 
-         class="form-control input-md" 
-         required= />
-    
-  </div>
-</div>
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="email">Email</label>  
-  <div class="col-md-4">
-  <input id="email" 
-         name="email" 
-         type="text" 
-         ng-model="checkoutCtrl.email" 
-         class="form-control input-md" 
-         required />
-    
-  </div>
-</div>
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="address1">Address Line1</label>  
-  <div class="col-md-4">
-  <input id="address1" 
-         name="address1" 
-         type="text" 
-         ng-model="checkoutCtrl.address1" 
-         class="form-control input-md" 
-         required />
 
-  <span class="help-block">Street address, P.O. box, company name, c/o</span>  
-  </div>
-</div>
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="address2"></label>  
-  <div class="col-md-4">
-  <input id="address2" 
-         name="address2" 
-         type="text" 
-         ng-model="checkoutCtrl.address2" 
-         class="form-control input-md">
-
-  <span class="help-block">Apartment, suite, unit, building, floor, etc.</span>  
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="city">City</label>  
-  <div class="col-md-4">
-  <input id="city" 
-         name="city" 
-         type="text" 
-         ng-model="checkoutCtrl.city" 
-         class="form-control input-md" 
-         required />
-    
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="state">State/Province/Region</label>  
-  <div class="col-md-4">
-  <input id="state" 
-         name="state" 
-         type="text" 
-         ng-model="checkoutCtrl.state" 
-         class="form-control input-md" 
-         required />
-    
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="zip">Zip</label>  
-  <div class="col-md-4">
-  <input id="zip" 
-         name="zip" 
-         type="text" 
-         ng-model="checkoutCtrl.zip" 
-         class="form-control input-md" 
-         required />
-    
-  </div>
-</div>
-
-<!-- Textarea -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="deliveryNote">Add delivery note</label>
-  <div class="col-md-4">                     
-    <textarea class="form-control" id="deliveryNote" name="deliveryNote"></textarea>
-  </div>
-</div>
-
-<!-- Button -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="checkoutButton"></label>
-  <div class="col-md-4">
-    <button id="checkoutButton" name="checkoutButton" class="btn btn-success">Place Order</button>
-  </div>
-</div>
+<pre>{{checkoutCtrl.cart | json}}</pre>

@@ -1,76 +1,60 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-
+var jwt = require('jsonwebtoken');
+var secret = 'supersecret'
 var user = require('../models/user');
 var address = require('../models/address');
 var order = require('../models/order');
 
 router
-    .post('/register', userRegister)
-    .post('/login', userLogin)
-    .get('/logout', userLogout)
-    .get('/status', userStatus)
+    .post('/authenticate', authenticateUser)
     .get('/', getAllUsers)
     .get('/:_id', getUser)
     .put('/:_id', updateUser)
+    .post('/', createUser)
+    .use(function(req, res, next) {
+      var token = req.body.token || req.body.query || req.headers['x-access-token'];
+
+      if (token) {
+        jwt.verify(token, secret, function(err, decoded) {
+          if (err) {
+            res.json({ success: false, message: 'Token invalid'});
+          } else {
+            req.decoded = decoded;
+            next();
+          }
+        });
+      } else {
+        res.json({ success: false, message: 'No token provided' });
+      }
+    })
+    .post('/me', function(req, res) {
+      res.send(req.decoded)
+    })
 
 /////////
 
-function userRegister(req, res) {
-  user.register(new user({ username: req.body.username }),
-    req.body.password, function(err, account) {
-    if (err) {
-      return res.status(500).json({
-        err: err
-      });
-    }
-    passport.authenticate('local')(req, res, function () {
-      return res.status(200).json({
-        status: 'Registration successful!'
-      });
-    });
-  });
-};
+function authenticateUser(req, res) {
+  user.findOne({ username: req.body.username }).select('email username password').exec(function(err, user) {
+    if (err) throw err;
 
-function userLogin(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) {
-      return next(err);
-    }
     if (!user) {
-      return res.status(401).json({
-        err: info
-      });
-    }
-    req.logIn(user, function(err) {
-      if (err) {
-        return res.status(500).json({
-          err: 'Could not log in user'
-        });
+      res.json({ success: false, message: 'Could not authenticate user' });
+    } else if (user) {
+        if (req.body.password) {
+            var validPassword = user.comparePassword(req.body.password);
+      } else {
+            res.json({ success: false, message: 'No password provided'})
       }
-      res.status(200).json({
-        status: 'Login successful!'
-      });
-    });
-  })(req, res, next);
-};
+        if(!validPassword) {
+          res.json({success: false, message: 'Could not authenticate password '})
+      } else {
+          var token = jwt.sign({ username: user.username, email: user.email }, secret, { expiresIn: '24h'} );
+          res.json({ success: true, message: 'User authenticated!', token: token });
+        }
+    }
 
-function userLogout(req, res) {
-  req.logout();
-  res.status(200).json({
-    status: 'Bye!'
-  });
-};
-
-function userStatus(req, res) {
-  if (!req.isAuthenticated()) {
-    return res.status(200).json({
-      status: false
-    });
-  }
-  res.status(200).json({
-    status: true
   });
 };
 
@@ -123,6 +107,22 @@ function updateUser(req, res) {
               });
       });
   }
+
+  function createUser(req, res) {
+        var u = new user(req.body);
+        if (req.body.username == null || req.body.username == '' || req.body.password == null || req.body.password == '' || req.body.email == null || req.body.email == '') {
+          res.json({ success: false, message: 'Make sure username, email and password were provided'});
+        } else {
+            u.save(function(err) {
+            if (err){
+              res.json({success: false, message: 'Username or Email already exists!'});
+            } else {
+              res.json({ success: true, message: 'user created!'});
+            }
+    });
+        }
+}
+
 
 module.exports = router;
 

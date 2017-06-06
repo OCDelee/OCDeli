@@ -8,9 +8,10 @@ var ingredientSchema = new Schema ({
     protein: Number,
     vitamin: Array,
     mineral: Array,
-    total: Number,
+    cost: Number,
     servingSize: Number,
-    servingSizeUOM: String // unit of measurement
+    servingSizeUOM: String, // unit of measurement
+    selected: Boolean
 
 });
 

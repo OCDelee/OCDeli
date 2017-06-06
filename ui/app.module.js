@@ -4,15 +4,25 @@
     angular
         .module('app', [
           'ui.router',
+          'app.main',
           'app.menu',
-          // 'app.ocdeli'
-          // 'credit-cards'
+          'app.checkout',
+          'app.reg',
+          'app.service',
+          'app.order'
+
+          // 'stripe-checkout',
+          // 'app.purchase'
 
         ])
         .value('apiUrl', 'http://localhost:3000/api/')
-        .config(function($stateProvider, $urlRouterProvider) {
+        .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
           $urlRouterProvider.otherwise('/landing');
-          // stripeProvider.setPublishableKey('pk_test_L6fEVgzAFeoFv1Yy3kGtFwv3');
+          $httpProvider.interceptors.push('authInterceptors');
+          //  StripeCheckoutProvider.defaults({
+          //       key: 'pk_test_L6fEVgzAFeoFv1Yy3kGtFwv3'
+          //   })
+
 
           $stateProvider
             .state('landing', {
@@ -25,40 +35,59 @@
               controller: 'CheckoutController as checkoutCtrl',
               templateUrl: './views/checkout.html'
             })
-            // .state('payment', {
-            //   url: '/payments',
-            //   templateUrl: './views/payment.html'
-            // })
-            // .state('sales', {
-            //   url: '/sales',
-            //   abstract: true,
-            //   template: '<div ui-view></div>'
-            // })
-            // .state('sales.grid', {
-            //   url: '/grid',
-            //   controller: 'SalesGridController as salesGridCtrl',
-            //   templateUrl: 'app/sales/sales.grid.html'
-            // })
-            // .state('sales.detail', {
-            //   url: '/detail/:id',
-            //   controller: 'SalesDetailController as salesDetailCtrl',
-            //   templateUrl: 'app/sales/sales.detail.html'
-            // })
-            // .state('vehicles', {
-            //   url: '/vehicles',
-            //   abstract: true,
-            //   template: '<div ui-view></div>'
-            // })
-            // .state('vehicles.grid', {
-            //   url: '/grid',
-            //   controller: 'VehiclesGridController as vehiclesGridCtrl',
-            //   templateUrl: 'app/vehicles/vehicles.grid.html'
-            // })
-            // .state('vehicles.detail', {
-            //   url: '/detail/:id',
-            //   controller: 'VehiclesDetailController as vehiclesDetailCtrl',
-            //   templateUrl: 'app/vehicles/vehicles.detail.html'
-            // });
+            .state('register', {
+              url:'/register',
+              controller: 'RegisterController as regCtrl',
+              templateUrl: './views/users/register.html',
+              // authenticated: false
+            })
+            .state('authenticate', {
+              url:'/authenticate',
+              templateUrl: './views/users/login.html',
+              // authenticated: false
+            })
+            .state('logout', {
+              templateUrl: './views/users/logout.html',
+              // authenticated: true
+            })
+            .state('profile', {
+              url: '/profile',
+              templateUrl: './views/users/profile.html'
+              // authenticated: true
+            })
+            .state('order', {
+              url: '/order',
+              controller: 'OrderController as orderCtrl',
+              templateUrl: './views/order.html'
+            })
 
-        });
+        })
+
+        //   .run(function($log, StripeCheckout) {
+        //     StripeCheckout.defaults({
+        //       opened: function() {
+        //         $log.debug("Stripe Checkout opened");
+        //       },
+        //       closed: function() {
+        //         $log.debug("Stripe Checkout closed");
+        //       }
+        //     });
+        // });
+
+      //   .run(function($rootScope, auth, $location) {
+      //       $rootScope.$on('$stateChangeStart', function(event, next, current){
+      //         if (next.$$route.authenticated == true) {
+      //           if (!auth.isLoggedIn()) {
+      //               event.preventDefault();
+      //               $location.path('/landing');
+      //           }
+      //         } else if (next.$$route.authenticated == false) {
+      //           if (auth.isLoggedIn()) {
+      //             event.preventDefault();
+      //             $location.path('/profile')
+      //           }
+      //           console.log('should not be authenticated')
+      //         } 
+      //   })
+      // })
 })();

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const passportLocalMongoose = require('passport-local-mongoose');
+var bcrypt = require('bcrypt-nodejs')
 
 
 var userSchema = new Schema ({
@@ -8,18 +8,13 @@ var userSchema = new Schema ({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'address' 
     },
-    order: { 
+    order: [{ 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'order' 
-    },
-    userRole: { 
-        type: String, 
-        enum: ['Admin', 'Customer', 'Employee']
-    },
+    }],
     firstName: String,
     lastName: String,
     phone: String,
-    email: String,
     username: { 
         type: String,
         lowercase: true,
@@ -30,8 +25,28 @@ var userSchema = new Schema ({
         type: String,
         required: true 
     },
+    email: { 
+        type: String,
+        lowercase: true,
+        required: true,
+        unique: true
+    }
 });
 
-userSchema.plugin(passportLocalMongoose);
+
+userSchema.pre('save', function(next) {
+  var user = this;
+  bcrypt.hash(user.password, null, null, function(err, hash) {
+      if (err)
+        return next(err);
+    user.password = hash;
+    next();
+  });
+});
+
+userSchema.methods.comparePassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+};
+
 
 module.exports = mongoose.model('user', userSchema);
